@@ -64,26 +64,26 @@ router.post('/', (req, res) => {
 
 });
 
+
+
 router.put('/:id', (req, res) => {
   // update a category by its `id` value
-  Category.update({
-    where: {
-      id: req.params.id
-    }
+  Category.update(req.body, {
+      where: {
+          id: req.params.id
+      }
   })
-  .then(categoryData => {
-    if (!categoryData[0]) {
-      res.status(404).json({ message: "Unable to locate category with specified id." });
-      return;
-    } else {
-      res.json(categoryData);
-      console.log('Successfully updated category!')
-    }
-  })
-  .catch(err => {
-    console.log(err, "Unable to update category.");
-    res.status(500).json(err);
-  })
+      .then(categoryData => {
+          if (!categoryData[0]) {
+              res.status(404).json({ message: "Unable to locate category with specified id." });
+              return;
+          }
+          res.json(categoryData);
+      })
+      .catch(err => {
+          console.log(err);
+          res.status(500).json(err);
+      });
 });
 
 router.delete('/:id', (req, res) => {
